@@ -18,7 +18,7 @@ def write_csv_file(url, title, content):
         os.makedirs(result_dir)
 
     # CSV 파일 경로 설정
-    csv_file_path = os.path.join(result_dir, 'hani_news2.csv')
+    csv_file_path = os.path.join(result_dir, 'hani_news.csv')
 
     # csv 파일에 데이터 쓰기
     with open(csv_file_path, 'a', newline='', encoding='utf-8') as csvfile:
@@ -45,26 +45,26 @@ def fetch_articles(href):
             # JSON 데이터 파싱
             parsed_data = json.loads(json_data)
 
-            # created_date_str = parsed_data['props']['pageProps']['article']['createDate']
-            # created_date = datetime.strptime(created_date_str, '%Y-%m-%d %H:%M')
-            # now = datetime.now().replace(hour=6, minute=0, second=0, microsecond=0)
-            # yesterday = now - timedelta(days=1)
+            created_date_str = parsed_data['props']['pageProps']['article']['createDate']
+            created_date = datetime.strptime(created_date_str, '%Y-%m-%d %H:%M')
+            now = datetime.now().replace(hour=6, minute=0, second=0, microsecond=0)
+            yesterday = now - timedelta(days=1)
 
-            # if(created_date <= now and created_date > yesterday):
+            if(created_date <= now and created_date > yesterday):
 
-            # "title" 값을 추출
-            title = parsed_data['props']['pageProps']['article']['title']
-            print("Title: ", title)
-            # print("Date: ", created_date)
+                # "title" 값을 추출
+                title = parsed_data['props']['pageProps']['article']['title']
+                print("Title: ", title)
+                # print("Date: ", created_date)
 
-            content = parsed_data['props']['pageProps']['article']['content']
-            content = re.sub(r'<[^>]+>', '', content)
-            content_without_images = re.sub(r'\[%%IMAGE\d+%%\]', '', content)
+                content = parsed_data['props']['pageProps']['article']['content']
+                content = re.sub(r'<[^>]+>', '', content)
+                content_without_images = re.sub(r'\[%%IMAGE\d+%%\]', '', content)
 
-            write_csv_file(url, title, content_without_images)
-            
-            # else:
-            #   return
+                write_csv_file(url, title, content_without_images)
+                
+            else:
+              return
 
     except Exception as e:
         print(f"Error fetching article {href}: {e}")
