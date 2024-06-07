@@ -1,0 +1,36 @@
+name: Hani News Crawler
+
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+        architecture: 'x64'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 tqdm
+
+    - name: Run crawler
+      run: python hani_crawler.py
+
+    - name: Commit and push if there are changes
+      run: |
+        git config --global user.email "jaeuk520@naver.com"
+        git config --global user.name "jaeuk520"
+        git add result/hani_news.csv
+        git commit -m "Update Hani News Data csv $(date +'%Y-%m-%d')"
+        git push https://${{ secrets.JAEUKTOKEN }}@github.com/konkuk-distributed-system/news-recommendation.git main
