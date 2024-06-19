@@ -33,5 +33,4 @@ jobs:
         git config --global user.email "abs3011@konkuk.ac.kr"
         git config --global user.name "Kyuwon"
         git add result/yeonhap_news.csv
-        git commit -m "Update Yeonhap_News Data csv $(date +'%Y-%m-%d')"
-        git push https://${{ secrets.KYUWONTOKEN }}@github.com/konkuk-distributed-system/news-recommendation.git main
+        git diff --cached --exit-code || (git commit -m "Update YeonHap News Data csv $(date +'%Y-%m-%d')" && git push https://${{ secrets.KYUWONTOKEN }}@github.com/konkuk-distributed-system/news-recommendation.git main)
