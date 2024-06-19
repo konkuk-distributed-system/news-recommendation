@@ -19,6 +19,11 @@ jobs:
       with:
         python-version: '3.x'
         architecture: 'x64'
+    - name: List files
+      run: |
+         pwd
+         ls -l
+         ls -l result/
 
     - name: Install dependencies
       run: |
@@ -27,6 +32,9 @@ jobs:
 
     - name: Run crawler
       run: jupyter nbconvert --to notebook --execute yeonHap_crawler.ipynb
+
+    - name: Display CSV content
+      run: cat result/yeonhap_news.csv
 
     - name: Commit and push if there are changes
       run: |
