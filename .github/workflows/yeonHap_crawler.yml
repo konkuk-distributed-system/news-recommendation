@@ -1,4 +1,4 @@
-name: Joongang News Crawler
+name: YeonHap News Crawler
 
 on:
   schedule:
