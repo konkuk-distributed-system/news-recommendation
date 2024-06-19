@@ -34,7 +34,7 @@ jobs:
       run: jupyter nbconvert --to notebook --execute yeonHap_crawler.ipynb
 
     - name: Display CSV content
-      run: cat result/yeonhap_news.csv
+      run: ls -l result/
 
     - name: Commit and push if there are changes
       run: |
